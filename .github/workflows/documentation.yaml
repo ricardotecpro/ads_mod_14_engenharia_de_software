@@ -43,31 +43,21 @@ jobs:
       - name: Install Playwright Browsers
         run: poetry run playwright install --with-deps chromium
 
-      - name: Deploy with Mike
+      - name: Build and Deploy
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Generate content before deploy
+          # Gera conteúdo (slides e quizzes)
           poetry run task slides
           poetry run task quizzes
-          
-          # Build site to trigger hooks (copies slides to site/)
+          # Build do site (dispara hooks de cópia)
           poetry run mkdocs build
-          
-          # Start MkDocs server in background for tests
+          # Servidor em background para testes
           poetry run mkdocs serve &
           PID=$!
-          sleep 10  # Wait for server to start
-          
-          # Run tests to ensure quality
+          sleep 10
+          # Roda testes para garantir qualidade
           poetry run task test
-          
-          # Kill server
           kill $PID
-          
-          # Clean local gh-pages to ensure fresh fetch/deploy
-          # (Removed manual git branch operations as fetch-depth: 0 handles history)
-          # git branch -D gh-pages || echo "gh-pages not present locally"
-          # git fetch origin gh-pages --depth=1 || echo "gh-pages branch not found on remote"
-          poetry run mike deploy --push --update-aliases estavel latest
-          poetry run mike set-default --push estavel
+          # Deploy direto para gh-pages (sem Mike)
+          poetry run mkdocs gh-deploy --force
