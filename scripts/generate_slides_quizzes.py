@@ -1,4 +1,4 @@
-﻿"""
+"""
 Script para gerar automaticamente todos os slides HTML e quizzes interativos
 Baseado nos formatos antigos que funcionavam
 """
@@ -31,12 +31,6 @@ def generate_slide_html(lesson_number: int) -> str:
             </section>
         </div>
     </div>
-    
-    <!-- Dicas de Atalhos -->
-    <div class="reveal-shortcuts">
-        Atalhos: F (Tela Cheia) | S (Speaker View)
-    </div>
-
     <script src="https://unpkg.com/reveal.js@4.5.0/dist/reveal.js"></script>
     <script src="https://unpkg.com/reveal.js@4.5.0/plugin/markdown/markdown.js"></script>
     <script src="https://unpkg.com/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
@@ -50,29 +44,6 @@ def generate_slide_html(lesson_number: int) -> str:
             progress: true,
             plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
         }});
-
-        // Ocultar atalhos em tela cheia
-        function updateShortcutsVisibility() {{
-            console.log('fullscreenchange event detected');
-            const isFullscreen = document.fullscreenElement || 
-                                 document.webkitFullscreenElement || 
-                                 document.mozFullScreenElement || 
-                                 document.msFullscreenElement;
-            console.log('isFullscreen:', !!isFullscreen);
-            
-            const shortcuts = document.querySelector('.reveal-shortcuts');
-            if (shortcuts) {{
-                shortcuts.style.display = isFullscreen ? 'none' : 'block';
-                console.log('Set display to:', shortcuts.style.display);
-            }} else {{
-                console.log('Shortcuts element not found');
-            }}
-        }}
-
-        document.addEventListener('fullscreenchange', updateShortcutsVisibility);
-        document.addEventListener('webkitfullscreenchange', updateShortcutsVisibility);
-        document.addEventListener('mozfullscreenchange', updateShortcutsVisibility);
-        document.addEventListener('MSFullscreenChange', updateShortcutsVisibility);
     </script>
 </body>
 </html>
