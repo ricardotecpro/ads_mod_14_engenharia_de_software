@@ -30,7 +30,7 @@ jobs:
         continue-on-error: true
       
       - name: Build Site
-        run: poetry run task build
+        run: poetry run mkdocs build
       
       - name: Check for Broken Links
         run: |

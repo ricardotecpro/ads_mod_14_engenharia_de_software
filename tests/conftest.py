@@ -20,7 +20,7 @@ def start_server():
     
     # Verifica se o site foi gerado
     if not site_dir.exists() or not (site_dir / "index.html").exists():
-        pytest.fail("Diretório 'site/' não encontrado ou inválido. Execute 'poetry run task build' antes dos testes.")
+        pytest.fail("Diretório 'site/' não encontrado ou inválido. Execute 'poetry run mkdocs build' antes dos testes.")
 
     # Porta fixa para teste (definida também no pyproject.toml)
     port = "8766"
